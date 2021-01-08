@@ -1,3 +1,1 @@
-# Algorithm-study
-
-## ICPC 스터디 초급 & 중급
+* ICPC 스터디 초급 & 중급
