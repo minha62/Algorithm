@@ -152,3 +152,297 @@
     - 1) 최악의 원시작업 수행회수를 입력크기의 함수로서 구한다
     - 2) 이 함수를 big-oh 표기법으로
 - 상수계수와 낮은 차수의 항들은 결국 탈락되므로, 원시작업 수를 계산할 때부터 무시
+
+
+### 분석의 지름길
+
+- 다중의 원시작업
+    - 하나의 식에 나타나는 여러 개의 원시작업을 하나로 계산
+
+- 반복문
+    - 반복문의 실행시간 * 반복횟수
+
+- 중첩 반복문
+    - 반복문의 실행시간 * ㅠ 각 반복문의 크기
+
+- 연속문
+    - 각 문의 실행시간을 합산, 이들 중 최대값 선택
+
+- 조건문
+    - 조건검사의 실행시간에 if-else 절의 실행시간 중 큰 것을 합산
+
+
+### Big-Omega
+
+- n≥n0 에 대해 f(n)≥cg(n)이 성립하는 상수 c>0 및 정수의 상수 n0≥1가 존재하면 "f(n)=Ω(g(n))"
+- Big-Oh가 함수의 증가율의 상한(upper bound)을 나타내는데 반해, Big-Omega는 함수의 증가율의 하한(lower bound)을 나타냄
+
+
+### Big-Theta
+
+- n≥n0에 대해 c'g(n)≤f(n)≤c^n*g(n) 이 성립하는 상수 c'>0, c^n>0 및 정수의 상수 n0≥1가 존재하면 "f(n)=Θ(g(n))"
+- "f(n)=O(g(n))"인 동시에 "f(n)=Ω(g(n))"이면, "f(n)=Θ(g(n))"
+- Big-Theta는 함수의 증가율의 상한과 하한을 모두 나타내므로 동일함수를 나타냄
+
+
+
+### 점근표기에 관한 직관
+
+1. Big-Oh
+    - 점근적으로 f(n)≤g(n)이면, "f(n)=O(g(n))"
+2. Big-Omega
+    - 점근적으로 f(n)≥g(n)이면, "f(n)=Ω(g(n))"
+3. Big-Theta
+    - 점근적으로 f(n)=g(n)이면, "f(n)=Θ(g(n))"
+
+ 
+
+---
+
+
+
+### 응용문제 1. 행렬에서 특정 원소 찾기
+
+- n x n 배열 A의 원소들 중 특정 원소 x를 찾는 알고리즘 findMatrix를 작성하고자 한다.
+- 알고리즘 findMatrix는 A의 행들을 반복하며, x를 찾거나 또는 A의 모든 행들에 대한 탐색을 마칠 때까지, 각 행에 대해 알고리즘 findRow를 호출한다.
+
+A. 위에 의도한 바와 일치하도록 알고리즘 findMatrix를 의사코드로 작성
+
+B. findMatrix의 최악실행시간 n을 구해라
+
+C. 이는 선형시간 알고리즘인가? 왜 그런지 or 왜 아닌지 설명
+
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define ROWS 8
+#define COLS 8
+
+void makeArray(int A[][COLS])
+{
+    for(int r=0; r<ROWS; r++)
+        for(int c=0; c<COLS; c++)
+            A[r][c] = rand() % 100; 
+}
+
+void printArray(int A[][COLS])
+{
+    for(int r=0; r<ROWS; r++)
+    {
+        for(int c=0; c<COLS; c++)
+            printf("%2d ", A[r][c]);
+        printf("\n");
+    }
+    printf("\n");
+}
+
+int findRow(int A[], int key)
+{
+    for(int c=0; c<COLS; c++)
+        if(A[c] == key)
+            return c;
+    return -1;
+}
+
+void findMatrix(int A[][COLS], int key)
+{
+    int r = 0;
+    int index;
+    
+    while(r < ROWS)
+    {
+        index = findRow(A[r], key);
+        if(index >= 0)
+        {
+            printf("%d행 %d열에서 %d 발견\n", r, index, key);
+            return;
+        }
+        else
+            r++;
+    }
+    printf("Not Found\n");
+}
+
+void main()
+{
+    int A[ROWS][COLS];
+    srand(time(NULL)); // srand() 안해주면 매번 같은 값 발생
+    makeArray(A);
+    printArray(A);
+    
+    int key;
+    printf("Input a key value : ");
+    scanf("%d", &key);
+    
+    findMatrix(A, key);
+}
+```
+
+
+
+### 2. 비트행렬에서 최대 1행 찾기 비트행렬에서 최대 1행 찾기
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define ROWS 8
+#define COLS 8
+
+void makeArray(int A[][COLS])
+{
+    for(int r=0; r<ROWS; r++)
+    {
+        int count = rand() % 8;
+        
+        for(int i = 0; i < count; i++)
+            A[r][i] = 1;
+        
+        for(int j = count; j < COLS; j++)
+            A[r][j] = 0;
+    }
+}
+
+void printArray(int A[][COLS])
+{
+    for(int r=0; r<ROWS; r++)
+    {
+        for(int c=0; c<COLS; c++)
+            printf("%2d ", A[r][c]);
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void mostOneButSlow(int A[][COLS]) 
+{
+    int jmax = 0;
+    int i, j, row;
+    
+    for(i = 0; i < ROWS; i++)
+    {
+        j = 0;
+        
+        while(j < COLS && A[i][j] == 1)
+            j++;
+        
+        if(j > jmax)
+        {
+            row = i;
+            jmax = j;
+        }
+    }
+    printf("%d행에 %d개의 1이 최대값임\n", row, jmax);
+}
+
+int mostOnes(int A[][COLS]) // 2차원 배열을 전달할 때 행은 생략해도 가능하지만 열 생략은 불가능. 둘 다 써도 됨
+{ 
+    int i = 0, j = 0;
+    int row;
+    
+    while(1)
+    {
+        while(A[i][j] == 1)
+        {
+            j++;
+            if(j == COLS-1)
+                return i;
+        }
+        
+        row = i;
+        
+        while(A[i][j] == 0)
+        {
+            i++;
+            if(i == ROWS-1)
+                return row;
+        }
+    }
+}
+
+void main()
+{
+    int A[ROWS][COLS];
+    srand(time(NULL)); // srand() 안해주면 매번 같은 값 발생
+    makeArray(A);
+    printArray(A);
+    //getchar();
+    
+    mostOneButSlow(A);  // O(n^2)
+    
+    printf("최대 1행은 %d행입니다.\n", mostOnes(A));  // O(n)
+    
+}
+```
+
+
+
+### 3. 누적평균
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define SIZE 8
+
+void makeArray(int A[])
+{
+    for(int i = 0; i < SIZE; i++)
+        A[i] = rand() % 50 + 50; // 50~99
+
+}
+
+void printArray(int A[])
+{
+    for(int i = 0; i < SIZE; i++)
+        printf("[%d] ", A[i]);
+    printf("\n");
+}
+
+void prefixAvg1(int A[])
+{
+    int X[SIZE];
+    int sum;
+    
+    for(int i = 0; i < SIZE; i++)
+    {
+        sum = 0;
+        
+        for(int j = 0; j <= i; j++)
+            sum += A[j];
+        X[i] = sum / (i + 1);
+    }
+    
+    printArray(X);
+}
+
+void prefixAvg2(int A[])
+{
+    int X[SIZE];
+    int sum = 0;
+    
+    for(int i = 0; i < SIZE; i++)
+    {
+        sum += A[i];
+        X[i] = sum / (i + 1);
+    }
+    
+    printArray(X);
+}
+
+void main()
+{
+    int A[SIZE];
+    srand(time(NULL));
+    makeArray(A);
+    printArray(A);
+    
+    prefixAvg1(A); // O(n^2)
+    prefixAvg2(A); // O(n)
+}
+```
