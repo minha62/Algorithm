@@ -199,7 +199,7 @@ void main()
 ```
 
 
-###LinkedQueue
+### LinkedQueue
 ```c
 #include <stdio.h>
 #include <stdlib.h>
