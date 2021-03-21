@@ -438,3 +438,60 @@ void main()
     printf("마지막 양초의 위치는 %d 입니다.\n", candle(&list, 7, 3));
 }
 ```
+
+
+### A.배열2
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 100
+typedef struct
+{
+    int V[SIZE];
+    int n;
+}ArrayList;
+void init(ArrayList* L)
+{
+    L->n = 0;
+}
+int remove1(ArrayList* L, int pos)
+{
+    int item = L->V[pos];
+    for (int i = pos + 1; i <= L->n - 1; i++)
+        L->V[i - 1] = L->V[i];
+    L->n--;
+    return item;
+}
+void buildList(ArrayList* L, int n) // 요구된 데이터구조를 사용하여 크기 n의 초기 리스트 L를 구축
+{
+    L->n = n;
+    for (int i = 0; i < n; i++)
+        L->V[i] = i + 1;
+}
+// 크기 n의 리스트 L에 대해 k를 사용하여 마지막 양초만 남을 때까지 불끄기를 모의실행하고 마지막 양초의 위치를 반환
+int runSimulation2(ArrayList* L, int k)
+{
+    int r = 0;
+    int remains = L->n;
+    while(remains > 1)
+    {
+        r = (r + k) % remains;
+        remains--;
+        remove1(L, r);
+    }
+    return L->V[0];
+}
+int candle(ArrayList* L, int n, int k) // buildList(n)을 호출한 후 runSimulation(S, n, k)를 수행
+{
+    buildList(L, n);
+    return runSimulation2(L, k);
+}
+void main()
+{
+    ArrayList list;
+    init(&list);
+    printf("마지막 양초의 위치는 %d 입니다.\n", candle(&list, 7, 3));
+}
+
+```
