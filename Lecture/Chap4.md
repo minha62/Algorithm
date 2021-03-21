@@ -115,7 +115,6 @@ void init(LinkedListType* L)
 void addFirst(LinkedListType* L, int item)
 {
     ListNode* node = (ListNode*)malloc(sizeof(ListNode));
-    //exception - node가 null이냐, 제대로 처리됐는가
     node->data = item;
     node->link = L->head;
     L->head = node;
@@ -134,8 +133,42 @@ void add(LinkedListType* L, int pos, int item)
     before->link = node;
 }
 
-//addlast - for
-//remove, remove first, remove last
+void addLast(LinkedListType* L, int item)
+{
+    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+    ListNode* last = L->head;
+    
+    while(last->link != NULL)
+        last = last->link;
+        
+    node->data = item;
+    last->link = node;
+}
+
+void removeFirst(LinkedListType* L)
+{
+    L->head = (L->head)->link;
+}
+
+void Remove(LinkedListType* L, int pos)
+{
+    ListNode* before = L->head;
+    
+    for(int i = 0; i < pos - 1; i++)
+        before = before->link;
+    
+    before->link = (before->link)->link;
+}
+
+void removeLast(LinkedListType* L)
+{
+    ListNode* beforeLast = L->head;
+    
+    while((beforeLast->link)->link != NULL)
+        beforeLast = beforeLast->link;
+    
+    beforeLast->link = NULL;
+}
 
 int get(LinkedListType* L, int pos)
 {
@@ -147,7 +180,7 @@ int get(LinkedListType* L, int pos)
     return p->data;
 }
 
-void set(LinkedListType* L, int pos, int iten)
+void set(LinkedListType* L, int pos, int item)
 {
     ListNode* p = L->head;
     
@@ -169,26 +202,39 @@ void main()
     LinkedListType list;
     init(&list);
     
-    addFirst(&list, 10);
-    printList(&list);
+    addFirst(&list, 10); printList(&list);
+    addFirst(&list, 20); printList(&list);
+    addFirst(&list, 30); printList(&list);
     
-    addFirst(&list, 20);
-    printList(&list);
-    
-    addFirst(&list, 30);
-    printList(&list);
+    getchar();
+
+    add(&list, 1, 40); printList(&list);
+    add(&list, 2, 50); printList(&list);
+    add(&list, 3, 60); printList(&list);
     
     getchar();
     
-    add(&list, 1, 40);
-    printList(&list);
+    addLast(&list, 70); printList(&list);
+    addLast(&list, 80); printList(&list);
+    addLast(&list, 90); printList(&list);
     
-    add(&list, 2, 50);
-    printList(&list);
+    getchar();
     
-    add(&list, 3, 60);
-    printList(&list);
+    Remove(&list, 5); printList(&list);
+    Remove(&list, 3); printList(&list);
     
+    getchar();
+    
+    removeFirst(&list); printList(&list);
+    removeFirst(&list); printList(&list);
+    
+    getchar();
+    
+    removeLast(&list); printList(&list);
+    removeLast(&list); printList(&list);
+    
+    getchar();
+
     int pos;
     printf("\n몇 번 노드의 값을 반환할까요? ");
     scanf("%d", &pos);
