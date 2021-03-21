@@ -424,7 +424,7 @@ int runSimulation1(ArrayList* L, int k)
             r = (r + 1) % L->n;
             
     }
-    return r;
+    return L->V[r];
 }
 int candle(ArrayList* L, int n, int k) // buildList(n)을 호출한 후 runSimulation(S, n, k)를 수행
 {
@@ -434,9 +434,7 @@ int candle(ArrayList* L, int n, int k) // buildList(n)을 호출한 후 runSimul
 void main()
 {
     ArrayList list;
-    int pos;
     init(&list);
-    pos = candle(&list, 7, 3);
-    printf("마지막 양초의 위치는 %d 입니다.\n", (&list)->V[pos]);
+    printf("마지막 양초의 위치는 %d 입니다.\n", candle(&list, 7, 3));
 }
 ```
