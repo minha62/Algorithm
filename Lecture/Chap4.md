@@ -495,3 +495,66 @@ void main()
 }
 
 ```
+
+### B.원형연결리스트
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 100
+typedef struct ListNode
+{
+    int data;
+    struct ListNode* link;
+}ListNode;
+typedef struct
+{
+    ListNode* head;
+}LinkedListType;
+void init(LinkedListType* L)
+{
+    L->head = NULL;
+}
+ListNode* getNode() {
+    ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+    return node;
+}
+LinkedListType* buildList(LinkedListType* L, int n)
+{
+    ListNode* p = getNode();
+    L->head = p;
+    p->data = 1;
+    for (int i = 2; i < n; i++) {
+        p->link = getNode();
+        p = p->link;
+        p->data = i;
+    }
+    p->link = L->head;
+    return L;
+}
+int runSimulation(LinkedListType* L, int k)
+{
+    ListNode* p = L->head;
+    ListNode* pnext;
+    while (p != p->link) {
+        for (int i = 1; i < k; i++)
+            p = p->link;
+        pnext = p->link;
+        p->link = (p->link)->link;
+        free(pnext);
+    }
+    return p->data;
+}
+int candle(LinkedListType* L, int n, int k)
+{
+    LinkedListType* list = buildList(L, n);
+    return runSimulation(list, k);
+}
+void main()
+{
+    LinkedListType list;
+    init(&list);
+    printf("마지막 양초의 위치는 %d 입니다.\n", candle(&list, 7, 3));
+}
+
+```
