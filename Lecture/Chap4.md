@@ -362,3 +362,81 @@ void main()
     
 }
 ```
+
+### 케이크 문제
+
+생일케이크에 n  0개의 불켜진 양초가 원형으로 빙둘러 서있다
+첫번째 양초부터 시작하여, k  0개의 양초를 건너뛰어 나타나는 양초의 불을 끄고 뽑아낸다
+그리고는 다음 양초로부터 시작하여 k개의 양초를 건너뛰어 나타나는 양초의 불을 끄고 뽑아낸다
+원을 돌면서 양초가 하나만 남을 때까지 촛불 끄고 뽑아내기를 계속
+이 마지막 양초는 내부에 특수장치가 설치되어 있어서 불이 꺼짐과 동시에 멋진 축하쇼를 펼치도록 되어 있다
+n과 k를 미리 알 경우, 원래 양초들의 원형 배치에서 특수 양초의 위치를 어디로 해놓아야 마지막까지 남을지 알고 싶다
+
+
+모의실행을 통해 특수 양초의 위치를 나타내는 양의 정수를 반환하는 알고리즘을, 원형의 양초 리스트를 다음 두 가지 데이터구조로 각각 구현하고자 한다
+A. 배열
+B. 원형연결리스트
+
+위 A, B 각각의 선택에 대해 아래 알고리즘을 의사코드로작성하라
+ candle(n, k): buildList(n)을 호출한 후 runSimulation(S, n, k)를 수행
+ buildList(n): 요구된 데이터구조를 사용하여 크기 n의 초기 리스트 S를 구축
+ runSimulation(S, n, k): 크기 n의 리스트 S에 대해 k를 사용하여 마지막 양초만 남을 때까지 불끄기를 모의실행하고 마지막 양초의 위치를 반환
+
+
+### A.배열1
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 100
+typedef struct
+{
+    int V[SIZE];
+    int n;
+}ArrayList;
+void init(ArrayList* L)
+{
+    L->n = 0;
+}
+void buildList(ArrayList* L, int n) // 요구된 데이터구조를 사용하여 크기 n의 초기 리스트 L를 구축
+{
+    L->n = n;
+    for (int i = 0; i < n; i++)
+        L->V[i] = i + 1;
+}
+// 크기 n의 리스트 L에 대해 k를 사용하여 마지막 양초만 남을 때까지 불끄기를 모의실행하고 마지막 양초의 위치를 반환
+int runSimulation1(ArrayList* L, int k)
+{
+    int i, r = 0;
+    int remains = L->n;
+    while (remains > 1)
+    {
+        i = 0;
+        while (i < k)
+        {
+            r = (r + 1) % L->n;
+            if (L->V[r] != 0)
+                i++;
+        }
+        L->V[r] = 0;
+        remains--;
+        while (L->V[r] == 0) 
+            r = (r + 1) % L->n;
+            
+    }
+    return r;
+}
+int candle(ArrayList* L, int n, int k) // buildList(n)을 호출한 후 runSimulation(S, n, k)를 수행
+{
+    buildList(L, n);
+    return runSimulation1(L, k);
+}
+void main()
+{
+    ArrayList list;
+    int pos;
+    init(&list);
+    pos = candle(&list, 7, 3);
+    printf("마지막 양초의 위치는 %d 입니다.\n", (&list)->V[pos]);
+}
+```
