@@ -145,29 +145,38 @@ void addLast(LinkedListType* L, int item)
     last->link = node;
 }
 
-void removeFirst(LinkedListType* L)
+int removeFirst(LinkedListType* L)
 {
+    int item = (L->head)->data;
     L->head = (L->head)->link;
+    return item;
+    
 }
 
-void Remove(LinkedListType* L, int pos)
+int Remove(LinkedListType* L, int pos)
 {
     ListNode* before = L->head;
     
     for(int i = 0; i < pos - 1; i++)
         before = before->link;
     
+    int item = (before->link)->data;
     before->link = (before->link)->link;
+    
+    return item;
 }
 
-void removeLast(LinkedListType* L)
+int removeLast(LinkedListType* L)
 {
     ListNode* beforeLast = L->head;
     
     while((beforeLast->link)->link != NULL)
         beforeLast = beforeLast->link;
     
+    int item = (beforeLast->link)->data;
     beforeLast->link = NULL;
+    
+    return item;
 }
 
 int get(LinkedListType* L, int pos)
