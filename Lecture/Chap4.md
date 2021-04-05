@@ -559,3 +559,53 @@ void main()
 }
 
 ```
+
+
+---
+
+### 기간
+- 정의 : 배열 X에 대해, X[i]의 기간(span) S[i]란 X[i] 바로 앞의 X[j] <= X[i]인 연속적인 X[j] 원소들의 최대 개수
+- 응용 : 재무 분석, 주가
+- 해결
+    - 정의
+    - 스택
+
+1. 정의
+```c
+#include <stdio.h>
+
+#define SIZE 6
+
+void spans(int X[], int S[])
+{
+    int s;
+    
+    for(int i = 0; i < SIZE; i++)
+    {
+        s = 1;
+        while((s <= i) && (X[i - s] <= X[i]))
+            s++;
+        
+        S[i] = s;
+    }
+}
+
+void main()
+{
+    int X[SIZE] = {6, 3, 4, 2, 5, 3};
+    int S[SIZE] = {0};
+    
+    spans(X, S);
+    
+    for(int i = 0; i < SIZE; i++)
+        printf("[%d] ", S[i]);
+    
+    printf("\n");
+}
+```
+
+
+2. 스택
+```c
+
+```
