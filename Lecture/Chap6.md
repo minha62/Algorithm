@@ -370,3 +370,142 @@ void main()
     printArray(); // n이 0이 되기 때문에 printArray()로 출력해야 함
 }
 ```
+
+### 힙의 마지막 노드
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
+
+#define MAX_ELEMENT 100
+
+typedef struct
+{
+    int heap[MAX_ELEMENT];
+    int heap_size;
+}Heap;
+
+void initHeap(Heap* h)
+{
+    h->heap_size = 0;
+}
+
+void upHeap(Heap* h)
+{
+    int i = h->heap_size;
+    int key = h->heap[i];
+
+    while ((i != 1) && (key < h->heap[i / 2]))
+    {
+        h->heap[i] = h->heap[i / 2];
+        i /= 2;
+    }
+    h->heap[i] = key;
+}
+
+void insertItem(Heap* h, int key)
+{
+    h->heap_size += 1;
+    h->heap[h->heap_size] = key;
+    upHeap(h);
+}
+
+void printHeap(Heap* h)
+{
+    for (int i = 1; i <= h->heap_size; i++)
+        printf("[%d] ", h->heap[i]);
+    printf("\n");
+}
+
+typedef struct
+{
+    int array[MAX_ELEMENT];
+    int top;
+}Stack;
+
+void initStack(Stack* s)
+{
+    s->top = -1;
+}
+
+bool isEmpty(Stack* s)
+{
+    if (s->top == -1)
+        return true;
+    else
+        return false;
+}
+
+void push(Stack* s, int data)
+{
+    s->array[++s->top] = data;
+}
+
+int pop(Stack* s)
+{
+    int key;
+    key = s->array[s->top];
+    s->top--;
+
+    return key;
+}
+
+int binaryExpansion(int n, Stack* s)
+{
+    while (n >= 2)
+    {
+        push(s, n % 2);
+        n /= 2;
+    }
+
+    push(s, n);
+
+    return;
+}
+
+
+int findLastNode(Heap *h, int n)
+{
+    int v = 1;
+
+    Stack s;
+    initStack(&s);
+
+    binaryExpansion(n, &s);
+    pop(&s);
+
+    while(!isEmpty(&s))
+    {
+        int bit = pop(&s);
+
+        if (bit == 0)
+            v = 2 * v;
+
+        else
+            v = 2 * v + 1;
+    }
+
+    return h->heap[v];
+}
+
+
+void main()
+{
+    int lastNode;
+
+    Heap heap;
+    initHeap(&heap);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < 10; i++)
+        insertItem(&heap, rand() % 100);
+
+    printHeap(&heap);
+
+    lastNode = findLastNode(&heap, heap.heap_size);
+
+    printf("힙의 마지막 노드 = %d\n", lastNode);
+}
+```
