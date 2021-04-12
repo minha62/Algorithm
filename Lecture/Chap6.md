@@ -367,6 +367,6 @@ void main()
     printHeap();
     
     inPlaceHeapSort();
-    printArray();
+    printArray(); // n이 0이 되기 때문에 printArray()로 출력해야 함
 }
 ```
