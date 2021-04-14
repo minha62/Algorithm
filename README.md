@@ -13,6 +13,8 @@
 
 [Chap7. 합병정렬](Lecture/Chap7.md)
 
+[Chap8. 퀵정렬](Lecture/Chap8.md)
+
 ---
 
 [알고리즘 스터디](Algorithm_study/Algorithm_study.md)
