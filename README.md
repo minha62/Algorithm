@@ -11,6 +11,8 @@
 
 [Chap6. 힙과 힙정렬](Lecture/Chap6.md)
 
+[Chap7. 합병정렬](Lecture/Chap7.md)
+
 ---
 
 [알고리즘 스터디](Algorithm_study/Algorithm_study.md)
