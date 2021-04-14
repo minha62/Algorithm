@@ -15,6 +15,8 @@
 
 [Chap8. 퀵정렬](Lecture/Chap8.md)
 
+[Chap8. 정렬일반](Lecture/Chap9.md)
+
 ---
 
 [알고리즘 스터디](Algorithm_study/Algorithm_study.md)
