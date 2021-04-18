@@ -53,5 +53,58 @@ void main()
 - 전제 : 1<=n,m<=100
 - 실행예 : n,m값을 입력받아 spiral 알고리즘을 이용하여 초기화된 배열을 출력하는 프로그램을 작성
 
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
+#define SIZE1 4
+#define SIZE2 5
+
+void spiral(int A[][SIZE2])
+{
+    int value = 1;
+    int left = 0, right = SIZE2 - 1;
+    int top = 0, bottom = SIZE1 - 1;
+    
+    while(left <= right && top <= bottom)
+    {
+        for(int j = left; j <= right; j++)
+            A[top][j] = value++;
+            
+        top++;
+        
+        for(int i = top; i <= bottom; i++)
+            A[i][right] = value++;
+        
+        right--;
+        
+        for(int j = right; j >= left; j--)
+            A[bottom][j] = value++;
+        
+        bottom--;
+        
+        for(int i = bottom; i >= top; i--)
+            A[i][left] = value++;
+        
+        left++;
+    }
+}
+
+void printArray(int A[][SIZE2])
+{
+    for(int i = 0; i < SIZE1; i++)
+    {
+        for(int j = 0; j < SIZE2; j++)
+            printf("%2d ", A[i][j]);
+        printf("\n");
+    }
+}
+
+void main()
+{
+    int A[SIZE1][SIZE2] = {0};
+    spiral(A);
+    printArray(A);
+}
+```
 
