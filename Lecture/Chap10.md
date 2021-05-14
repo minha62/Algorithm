@@ -1,4 +1,4 @@
-### 순차탐색
+### 선형탐색
 ```c
 #include <stdio.h>
 #include <stdlib.h>
