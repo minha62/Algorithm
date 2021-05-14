@@ -15,7 +15,9 @@
 
 [Chap8. 퀵정렬](Lecture/Chap8.md)
 
-[Chap8. 정렬일반](Lecture/Chap9.md)
+[Chap9. 정렬일반](Lecture/Chap9.md)
+
+[Chap10. 사전](Lecture/Chap10.md)
 
 ---
 
