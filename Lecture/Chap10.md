@@ -389,6 +389,42 @@ int main()
 }
 ```
 
+### 단일모드 배열의 최대 원소
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define SIZE 9
+
+void findMaxOfUnimodalArray(int A[], int n)
+{
+    int a = 0;
+    int b = n - 1;
+    int mid;
+
+    while (a < b)
+    {
+        mid = (a + b) / 2;
+
+        if (A[mid] < A[mid + 1])
+            a = mid + 1;
+        
+        if (A[mid] > A[mid + 1])
+            b = mid;
+    }
+
+    printf("%d\n", A[a]);
+}
+
+void main()
+{
+    int A[SIZE] = { -21, 8, 12, 13, 35, 41, 23, 20, 17 };
+
+    findMaxOfUnimodalArray(A, SIZE);
+}
+```
+
 ### 배열의 두 수 덧셈
 ```c
 #include <stdio.h>
