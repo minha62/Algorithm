@@ -388,6 +388,8 @@ int main()
     findIntersectingSegment(ev);
 }
 ```
+
+### 배열의 두 수 덧셈
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -404,61 +406,74 @@ typedef struct
 void sort(Dict D[])
 {
     int elem, i, j, idx;
-    
-    for(i = 1; i < SIZE; i++)
+
+    for (i = 1; i < SIZE; i++)
     {
         elem = D[i].elem;
         idx = D[i].idx;
-        
-        for(j = i - 1; j >= 0 && D[j].elem > elem; j--)
+
+        for (j = i - 1; j >= 0 && D[j].elem > elem; j--)
         {
             D[j + 1].elem = D[j].elem;
             D[j + 1].idx = D[j].idx;
         }
-        
+
         D[j + 1].elem = elem;
         D[j + 1].idx = idx;
     }
 }
 
+int findElement(Dict D[], int v)
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        if (D[i].elem == v)
+            return D[i].idx;
+    }
+    return -1;
+}
+
 void findIndexPair(Dict D[], int A[], int s)
 {
     int j;
-    
-    for(int i = 0; i < SIZE; i++)
+
+    for (int i = 0; i < SIZE; i++)
     {
         int v = s - A[i];
         j = findElement(D, v);
-        
-        if(j != -1)
+
+        if (i != j && j != -1)
         {
-            
+            printf("(%d, %d)\n", i, j);
+            break;
         }
     }
-    if(j == -1)
+    if (j == -1)
         printf("Not Found\n");
 }
 
 void buildDict(Dict D[], int A[])
 {
-    for(int i = 0; i < SIZE; i++)
+    for (int i = 0; i < SIZE; i++)
     {
         D[i].elem = A[i];
         D[i].idx = i;
     }
-    
+
     sort(D);
 }
 
 void main()
 {
-    int A[SIZE] = {2, 21, 8, 3, 5, 1, 13, 1};
+    int A[SIZE] = { 2, 21, 8, 3, 5, 1, 13, 1 };
     Dict D[SIZE];
-    
+
     buildDict(D, A);
-    
-    for(int i = 0; i < SIZE; i++)
+
+    for (int i = 0; i < SIZE; i++)
         printf("(%d, %d) ", D[i].elem, D[i].idx);
     printf("\n");
+
+    findIndexPair(D, A, 24);
 }
 ```
