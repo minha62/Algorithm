@@ -19,6 +19,8 @@
 
 [Chap10. 사전](Lecture/Chap10.md)
 
+[Chap11. 탐색트리](Lecture/Chap11.md)
+
 ---
 
 [알고리즘 스터디](Algorithm_study/Algorithm_study.md)
