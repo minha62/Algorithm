@@ -23,6 +23,8 @@
 
 [Chap12. 해시테이블](Lecture/Chap12.md)
 
+[Chap13. 그래프](Lecture/Chap13.md)
+
 ---
 
 [알고리즘 스터디](Algorithm_study/Algorithm_study.md)
