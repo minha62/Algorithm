@@ -189,7 +189,7 @@ void main()
 int map[M][N];
 int path[M][N];
 
-int num_path(int m, int n)
+int num_path(int m, int n) // 재귀
 {
     if(map[m][n] == 0)
         return 0;
@@ -248,6 +248,61 @@ void main()
     
     //printf("%d\n", num_path(m - 1, n - 1));
     printf("%d\n", calc_path(m, n));
+    print(m, n);
+}
+```
+
+### 가중치가 있는 경로찾기(가장 높은 선호도)
+최고의 선호도 값이 나오는 경로 찾는 코드 추가해주기
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define M 100
+#define N 100
+
+#define max(x, y) ((x) > (y) ? (x) : (y))
+
+int map[M][N];
+int joy[M][N];
+
+void calc_joy(int m, int n)
+{
+    int i, j;
+    joy[0][0] = map[0][0];
+    
+    for(i = 1; i < m; i++)
+       joy[i][0] = joy[i - 1][0] + map[i][0];
+    
+    for(j = 1; j < n; j++)
+        joy[0][j] = joy[0][j - 1] + map[0][j];
+    
+    for(i = 1; i < m; i++)
+        for(j = 1; j < n; j++)
+            joy[i][j] = max(joy[i - 1][j], joy[i][j - 1]) + map[i][j];
+}
+
+void print(int m, int n)
+{
+    for(int i = 0; i < m; i++)
+    {
+        for(int j = 0; j < n; j++)
+            printf("%02d ", joy[i][j]);
+        printf("\n");
+    }
+}
+
+void main()
+{
+    int m, n;
+    scanf("%d %d", &m, &n);
+    
+    for(int i = 0; i < m; i++)
+        for(int j = 0; j < n; j++)
+            scanf("%d", &map[i][j]);
+    
+    calc_joy(m, n);
+    printf("\n");
     print(m, n);
 }
 ```
