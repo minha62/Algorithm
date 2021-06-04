@@ -131,7 +131,7 @@ void printA(GraphType* g)
         for(j = 0; j < g->n; j++)
         {
             if(A[i][j] == INF)
-                printf(" * ");
+                printf("  * ");
             else
                 printf("%3d ", A[i][j]);
         }
