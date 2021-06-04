@@ -156,6 +156,10 @@ void floyd(GraphType* g)
             for(j = 0; j < g->n; j++)
                 if(A[i][k] == 1 && A[k][j] == 1)
                     A[i][j] = 1;
+           //0,1(경로 유무)가 아니라 가중치값이 저장되어 있을때 최적경로 찾기
+                //if(A[i][k] + A[k][j] < A[i][j])
+                //  A[i][j] = A[i][k] + A[k][j];
+                
         printA(g);
     }
 }
