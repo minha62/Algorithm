@@ -327,3 +327,166 @@ void main()
         printf("Not Possible");
 }
 ```
+
+### Kruskal
+- 오류
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 7
+
+typedef struct Edge
+{
+    int vNum1;
+    int vNum2;
+    int weight;
+    int isTree;
+    struct Edege* next;
+}Edge;
+
+typedef struct IncidentEdge
+{
+    int adjVertex;
+    int weight;
+    Edge* e;
+    struct IncidentEdge* next;
+}IncidentEdge;
+
+typedef struct Vertex
+{
+    int num;
+    int isFresh;
+    struct Vertex* next;
+    IncidentEdge* top;
+}Vertex;
+
+Vertex* vHead = NULL;
+Edge* eHead = NULL;
+int vCount;
+int eCount;
+
+void makeVertices()
+{
+    Vertex* p = (Vertex*)malloc(sizeof(Vertex));
+    p->num = ++vCount;
+    p->top = NULL;
+    p->next = NULL;
+    p->isFresh = 0;
+    
+    Vertex* q = vHead;
+    if(q == NULL)
+        vHead = p;
+    else
+    {
+        while(q->next != NULL)
+            q = q->next;
+        q->next = p;
+    }
+}
+
+void insertIncidentEdge(Vertex* v, int av, Edge* e)
+{
+    IncidentEdge* p = (IncidentEdge*)malloc(sizeof(IncidentEdge));
+    p->adjVertex = av;
+    p->weight = e->weight;
+    p->e = e;
+    p->next = NULL;
+    
+    IncidentEdge* q = v->top;
+    if(q == NULL)
+        v->top = p;
+    else
+    {
+        while(q->next != NULL)
+            q = q->next;
+        q->next = p;
+    }
+}
+
+Vertex* findVertex(int v)
+{
+    Vertex* p = vHead;
+    while(p->num != v)
+        p = p->next;
+    return p;
+}
+
+void insertEdges(int v1, int v2, int weight)
+{
+    Edge* p = (Edge*)malloc(sizeof(Edge));
+    p->vNum1 = v1;
+    p->vNum2 = v2;
+    p->weight = weight;
+    p->isTree = 0;
+    p->next = NULL;
+    
+    Edge* q = eHead;
+    if(q == NULL)
+        eHead = p;
+    else
+    {
+        while(q->next != NULL)
+            q = q->next;
+        q->next = p;
+    }
+    
+    Vertex* v = findVertex(v1);
+    insertIncidentEdge(v, v2, p);
+    
+    v = findVertex(v2);
+    insertIncidentEdge(v, v1, p);
+}
+
+Edge* e[14];
+#define SWAP(x, y, t) ((t) = (x), (x) = (y), (y) = (t))
+
+void printEdge()
+{
+    Vertex* p = eHead;
+    int i = 0;
+    
+    for(; p != NULL; p = p->next)
+        e[i++] = p;
+        
+    int least, temp;
+    
+    for(i = 0; i < 13; i++)
+    {
+        least = i;
+        
+        for(int j = i + 1; j < 14; j++)
+            if(e[j]->weight < e[least]->weight)
+                least = j;
+        
+        SWAP(e[i], e[least], temp);
+    }
+    
+    for(i = 0; i < 14; i++)
+        printf("[%d - %d (%d)] ", e[i]->vNum1, e[i]->vNum2, e[i]->weight);
+    printf("\n");
+}
+
+void main()
+{
+    for(int i = 0; i < N; i++)
+        makeVertices();
+    
+    insertEdges(1, 2, 10);
+    insertEdges(1, 3, 15);
+    insertEdges(1, 4, 8);
+    insertEdges(1, 5, 27);
+    insertEdges(2, 4, 25);
+    insertEdges(2, 5, 4);
+    insertEdges(3, 4, 13);
+    insertEdges(3, 6, 32);
+    insertEdges(3, 7, 8);
+    insertEdges(4, 5, 10);
+    insertEdges(4, 6, 19);
+    insertEdges(4, 7, 22);
+    insertEdges(5, 7, 25);
+    insertEdges(6, 7, 15);
+    
+    printEdge();
+}
+```
