@@ -461,10 +461,62 @@ void printEdge()
         
         SWAP(e[i], e[least], temp);
     }
-    
+    /*
     for(i = 0; i < 14; i++)
         printf("[%d - %d (%d)] ", e[i]->vNum1, e[i]->vNum2, e[i]->weight);
     printf("\n");
+    */
+}
+
+int v[N];
+void initSet()
+{
+    for(int i = 0; i < N; i++)
+        v[i] = -1;
+}
+
+int vFind(int vNum)
+{
+    if(v[vNum] == -1)
+        return vNum;
+    
+    while(v[vNum] != -1)
+        vNum = v[vNum];
+    
+    return vNum;
+}
+
+void vUnion(int vNum1, int vNum2)
+{
+    int r1 = vFind(vNum1);
+    int r2 = vFind(vNum2);
+    
+    if(r1 != r2)
+        v[r2] = r1;
+}
+
+void kruskal()
+{
+    int eCount = 0;
+    int v1, v2;
+    int i = 0;
+    initSet();
+    Edge* p;
+    
+    while(eCount < N)
+    {
+        p = e[i];
+        v1 = vFind(p->vNum1 - 1);
+        v2 = vFind(p->vNum2 - 1);
+        
+        if(v1 != v2)
+        {
+            printf("간선 [%d - %d (%d)] 선택\n", p->vNum1, p->vNum2, p->weight);
+            eCount++;
+            vUnion(v1, v2);
+        }
+        i++;
+    }
 }
 
 void main()
@@ -488,5 +540,6 @@ void main()
     insertEdges(6, 7, 15);
     
     printEdge();
+    kruskal();
 }
 ```
