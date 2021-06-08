@@ -31,7 +31,7 @@
 
 [Chap16. 최소신장트리](Lecture/Chap16.md)
 
-[Chap17. 최단경로] (Lecture/Chap17.md)
+[Chap17. 최단경로](Lecture/Chap17.md)
 
 ---
 
