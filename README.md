@@ -31,6 +31,8 @@
 
 [Chap16. 최소신장트리](Lecture/Chap16.md)
 
+[Chap17. 최단경로] (Lecture/Chap17.md)
+
 ---
 
 [알고리즘 스터디](Algorithm_study/Algorithm_study.md)
