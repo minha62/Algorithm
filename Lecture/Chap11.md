@@ -839,3 +839,31 @@ void main()
 
 }
 ```
+
+### 주어진 키 범위 내의 원소
+```c
+//AVL 트리 코드 + 
+
+void rFindAllInRange(TreeNode* v, int k1, int k2)
+{
+    if(isExternal(v))
+        return;
+    
+    if(k1 <= v->leu && v->key < k2)
+        printf("[%d] ", v->key);
+    
+    if(v->key <= k1)
+        rFindAllInRange(v->right, k1, k2);
+    
+    else if(k2 <= v->key)
+        rFindAllInRange(v->left, k1, k2);
+    
+    else
+    {
+        rFindAllInRange(v->left, k1, k2);
+        rFindAllInRange(v->right, k1, k2);
+    }
+}
+
+rFindAllInRange(T->root, 50, 80);
+```
