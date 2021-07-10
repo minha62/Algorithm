@@ -80,9 +80,7 @@ int sum(int n){
 
 
 ### 1. Greedy
-[Greedy 개념](Greedy.md)
-
-[Greedy 백준](GreedyBJ.md)
+(Greedy.md)
 
 ### 2. Bruteforce & Backtracking
 
