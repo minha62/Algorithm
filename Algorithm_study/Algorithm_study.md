@@ -78,9 +78,7 @@ int sum(int n){
 ---
 
 
-
-### 1. Greedy
-(Greedy.md)
+[1. Greedy](Greedy.md)
 
 ### 2. Bruteforce & Backtracking
 
