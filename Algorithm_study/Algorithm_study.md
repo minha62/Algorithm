@@ -80,7 +80,7 @@ int sum(int n){
 
 [1. Greedy](Greedy.md)
 
-### 2. Bruteforce & Backtracking
+[2. Bruteforce & Backtracking](Brute.md)
 
 ### 3. Dynamic Programming
 
