@@ -74,3 +74,70 @@ public class pm15_5 {
 
 }
 ```
+
+### 11-7
+두 수의 평균만 구할 수 있는 단순 계산기가 있다. n개의 점수 목록이 주어졌을 때, 단순 계산기는 다음과 같은 방법으로 평균을 구한다.
+1. 처음에는 두 점수를 목록에서 선택해, 두 점수의 평균 m을 구한다. (선택한 두 점수는 목록에서 제거)
+2. 목록에 남아 있는 점수 중 하나를 선택해 앞서 구한 평균 m과의 평균을 구한다.(새롭게 구한 평균이 다음 점수와 계산할 평균 m이 된다.)
+3. 목록에 남은 점수가 없을 때까지 (2)를 반복한다. (2에서 선택한 점수는 제거)
+
+목록에서 점수를 선택하는 순서에 따라 평균이 달라진다. n개의 점수가 주어졌을 때, 가장 큰 평균값을 구하는 프로그램 작성
+[입력] 첫째 줄에 n을 입력(1<=n<=20), n개의 줄에 걸쳐 점수 x를 입력(1<=x<=5)
+[출력] 가장 큰 평균값 출력(소수 이하 6째 자리까지)
+
+```java
+import java.util.Scanner;
+
+public class pm11_7 {
+	
+	public static void insertion_sort(int arr[], int n) {
+		int i, j, key;
+		
+		for(i = 1; i < n; i++) {
+			key = arr[i];
+			
+			for(j = i - 1; j > 0 && arr[j] > key; j--)
+				arr[j + 1] = arr[j];
+			
+			arr[j + 1] = key;
+		
+		}
+	}
+	
+	public static double average(int arr[], int n) {
+		if(n == 1)
+			return arr[0];
+		
+		double avg = (arr[0] + arr[1]) / 2.0;
+		
+		for(int i = 2; i < n; i++)
+			avg = (avg + arr[i]) / 2.0;
+		
+		return avg;
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int n = sc.nextInt();
+		int arr[] = new int[n];
+		double avg = 0.0;
+		
+		for(int i = 0; i < n; i++) {
+			arr[i] = sc.nextInt();
+		}
+		
+		insertion_sort(arr, n);
+		avg = average(arr, n);
+		
+		System.out.println(String.format("%.6f", avg));
+		
+		sc.close();
+
+	}
+
+}
+```
+### 가장 작은 수부터 연쇄적으로 평균을 구할 때 가장 큰 평균 ==> 숫자 배열 오름차순 정렬
+### 배열 원소 1개인 경우도 고려
+
