@@ -82,7 +82,7 @@ int sum(int n){
 
 [2. Bruteforce & Backtracking](Brute.md)
 
-### 3. Dynamic Programming
+[3. Dynamic Programming](Dynamic.md)
 
 ### 4. Sorting, Binary Search
 
