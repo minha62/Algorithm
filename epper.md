@@ -32,3 +32,45 @@ public class pm12_2 {
 
 }
 ```
+
+### 15-5
+"0"과 1로만 이루어진 비트열의 경우에는 같은 비트가 연속해서 등장하는 횟수들을 기록하여 저장 공간을 줄일 수 있다. 예) "00011110" => "CDA", 비트열이 "1"로 시작하는 경우에는 저장 공간의 제일 앞에 "1"을 붙여 혼돈을 방지한다. 예) "110100" => "1BAAB", "111100100011" => "1DBACB"
+```java
+import java.util.Scanner;
+
+public class pm15_5 {
+	
+	public static void bit_to_char(String str) {
+		
+		String bit = "";
+		int cnt = 0;
+		
+		if(str.charAt(0) == '1')
+			bit += '1';
+		
+		for(int i = 0; i < str.length() - 1; i++) {
+			if(str.charAt(i) == str.charAt(i + 1))
+				cnt++;
+			else {
+				bit += (char)('A' + cnt);
+				cnt = 0;
+			}
+		}
+		
+		bit += (char)('A' + cnt);
+		
+		System.out.println(bit);
+
+	}
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		String str = sc.next();
+		bit_to_char(str);
+		
+		sc.close();
+	}
+
+}
+```
