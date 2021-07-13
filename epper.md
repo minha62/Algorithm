@@ -141,3 +141,43 @@ public class pm11_7 {
 ##### 가장 작은 수부터 연쇄적으로 평균을 구할 때 가장 큰 평균 ==> 숫자 배열 오름차순 정렬
 ##### 배열 원소 1개인 경우도 고려
 
+### 13-2 
+거스름돈을 가장 적은 화폐 개수로 내어 주는 프로그램을 작성(단, 화폐입력은 10원 단위, 화폐종류는 5만, 1만, 5천, 1천, 5백, 1백, 50, 10원권 총 8종)
+- [입력] 첫 번째 줄에 지불한 금액 m을 입력(10<=m<=100000), 두 번째 줄에 물품가격 n을 입력(10<=n<=m<=100000)
+- [출력] 거스름돈으로 지불한 화폐 종류 개수와 총 화폐 개수를 공백으로 구분하여 출력
+##### 그리디 알고리즘
+```java
+import java.util.Scanner;
+
+public class pm13_2 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int money[] = {50000, 10000, 5000, 1000, 500, 100, 50, 10};
+		
+		int m = sc.nextInt();
+		int n = sc.nextInt();
+		int change = m - n;
+		int cnt = 0, sort = 0;
+		boolean isUsed;
+		
+		for(int i = 0; i < 8; i++) {
+			isUsed = false;
+			
+			while(change >= money[i]) {
+				cnt++;
+				change -= money[i];
+				isUsed = true;
+			}
+			
+			if(isUsed)
+				sort++;
+		}
+		
+		System.out.println(sort + " " + cnt);
+		sc.close();
+	}
+
+}
+```
