@@ -84,7 +84,7 @@ int sum(int n){
 
 [3. Dynamic Programming](Dynamic.md)
 
-### 4. Sorting, Binary Search
+[4. Sorting, Binary Search](sort.md)
 
 ### 5. Two Pointer
 
