@@ -181,3 +181,65 @@ public class pm13_2 {
 
 }
 ```
+### 13-2 (재귀)
+n개의 요소를 갖는 배열인 회문(palindrome; 앞으로 읽으나 뒤로 읽으나 동일)을 만들자. 회문이 아닌 배열은 다음 규칙에 따라 수정해 회문으로 만든다. 수정 규칙은 인접한 요소끼리 합해서 n-1개의 요소를 갖는 배열로 만드는 방법이다. ex) {1, 3, 5, 7} => {4, 5, 7}
+
+회문이 아닌 배열이 주어졌을 때, 몇 번의 수정을 토애 회문이 만들어지는지 횟수를 구하는 프로그램을 작성하시오.
+
+[입력]
+- 첫 번째 줄에 배열을 구성하는 요소의 개수 n을 입력 (1<=n<=10)
+- 두 번째 줄에 n개의 숫자 Xi를 공백으로 구분하여 입력 (1<=Xi<=100)
+
+[출력]
+- 회문이 만들기까지 최소한의 배열 수정 횟수
+
+```java
+import java.util.Scanner;
+
+public class pm13_7 {
+	static int cnt;
+	
+	public static int palindrome(int x[], int start, int end) {
+		if(start >= end)
+			return cnt;
+		
+		if(x[start] == x[end]) 
+			return palindrome(x, start + 1, end - 1);
+		else {
+			if(x[start] < x[end]) {
+				x[start + 1] += x[start];
+				cnt++;
+				
+				return palindrome(x, start + 1, end);
+			}
+			
+			else {
+				x[end - 1] += x[end];
+				cnt++;
+				
+				return palindrome(x, start, end - 1);
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int n = sc.nextInt();
+		int x[] = new int[n];
+		int start = 0, end = n - 1;
+		int cnt;
+		
+		for(int i = 0; i < n; i++) {
+			x[i] = sc.nextInt();
+		}
+		
+		cnt = palindrome(x, start, end);
+		System.out.println(cnt);
+		
+		sc.close();
+
+	}
+
+}
+```
